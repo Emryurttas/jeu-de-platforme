@@ -1,11 +1,8 @@
 import Phaser from "phaser";
+import config from "./config";
+import Title from "./scene/Title";
 
-export default {
-    type: Phaser.AUTO,
-    physics: { default: "arcade" },
-    scale: {
-        mode: Phaser.Scale.FIT,
-        width: 800,
-        height: 600,
-    },
-};
+const game = new Phaser.Game(config);
+
+game.scene.add("Title", Title);
+game.scene.start("Title");
