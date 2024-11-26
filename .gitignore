@@ -1,0 +1,15 @@
+node_modules/
+build/
+
+.vscode/
+
+*.sublime-workspace
+*.sublime-project
+
+.idea/
+
+doc/*.txt
+*.swp
+*.tmp
+*.log
+
