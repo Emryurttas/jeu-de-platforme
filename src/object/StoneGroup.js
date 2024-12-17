@@ -1,10 +1,10 @@
 import TileGroup from "./TileGroup.js";
 
-export default class StoneGroup extends TileGroup{
+export default class StoneGroup extends TileGroup {
     constructor(scene) {
-        super(scene, 'stone', 64, 64);
+        super(scene, "stone", 64, 64);
     }
     static preload(scene) {
-        scene.load.image('stone', 'imj/stone.png');
+        scene.load.image("stone", "/img/stone.png");
     }
 }
