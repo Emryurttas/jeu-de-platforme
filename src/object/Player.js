@@ -18,5 +18,27 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     static preload(scene) {
         scene.load.spritesheet("player", "/img/player.png", { frameWidth: 40, frameHeight: 40 });
     }
+    #move(velocity) {
+        this.moveTween = this.scene.tweens.add({
+            targets: this.body.velocity,
+            x: velocity,
+            duration: 300,
+        });
+    }
+    moveRight() {
+        this.#move(300);
+    }
+    moveLeft() {
+        this.#move(-300);
+    }
+    halt(){
+        this.moveTween = this.scene.tweens.add({
+            targets: this.body.velocity,
+            x: 0,
+            duration: 300,
+        });
+    }
+
+
 
 }
