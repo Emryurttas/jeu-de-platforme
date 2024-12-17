@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import StoneGroup from "../object/StoneGroup.js";
-import LavaGroup from "../object/LavaGroup.js"; // Importer LavaGroup
+import LavaGroup from "../object/LavaGroup.js";
+import Player from "../object/Player.js";
 
 export default class Level1 extends Phaser.Scene {
     constructor() {
@@ -10,6 +11,7 @@ export default class Level1 extends Phaser.Scene {
     preload() {
         StoneGroup.preload(this);
         LavaGroup.preload(this);
+        Player.preload(this);
     }
 
     create() {
@@ -35,5 +37,6 @@ export default class Level1 extends Phaser.Scene {
         this.lavaGroup.children.iterate((tile) => {
             tile.refreshBody();
         });
+        this.player = new Player(this, 40, 280);
     }
 }
