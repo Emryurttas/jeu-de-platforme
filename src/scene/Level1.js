@@ -38,5 +38,34 @@ export default class Level1 extends Phaser.Scene {
             tile.refreshBody();
         });
         this.player = new Player(this, 40, 280);
+        this.physics.add.collider(this.player, this.stoneGroup);
+
+        this.keys = this.input.keyboard.addKeys({
+            left: Phaser.Input.Keyboard.KeyCodes.LEFT,
+            right: Phaser.Input.Keyboard.KeyCodes.RIGHT
+        });
+        this.handleInput();
+    }
+    handleInput() {
+        this.keys.left.on("down", () => this.handleMove());
+        this.keys.left.on("up", () => this.handleMove());
+
+        this.keys.right.on("down", () => this.handleMove());
+        this.keys.right.on("up", () => this.handleMove());
+    }
+
+    handleMove() {
+        if (this.keys.left.isDown && this.keys.right.isDown) {
+            this.player.halt();
+        }
+        else if (this.keys.left.isDown) {
+            this.player.moveLeft();
+        }
+        else if (this.keys.right.isDown) {
+            this.player.moveRight();
+        }
+        else {
+            this.player.halt();
+        }
     }
 }
