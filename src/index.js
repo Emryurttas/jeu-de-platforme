@@ -1,8 +1,8 @@
 import Phaser from "phaser";
 import config from "./config";
-import Title from "./scene/Title";
+import Level1 from "./scene/Level1";
 
 const game = new Phaser.Game(config);
 
-game.scene.add("Title", Title);
-game.scene.start("Title");
+game.scene.add("Level1", Level1);
+game.scene.start("Level1");
