@@ -42,7 +42,8 @@ export default class Level1 extends Phaser.Scene {
 
         this.keys = this.input.keyboard.addKeys({
             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
-            right: Phaser.Input.Keyboard.KeyCodes.RIGHT
+            right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
+            space: Phaser.Input.Keyboard.KeyCodes.SPACE
         });
         this.handleInput();
     }
@@ -52,6 +53,9 @@ export default class Level1 extends Phaser.Scene {
 
         this.keys.right.on("down", () => this.handleMove());
         this.keys.right.on("up", () => this.handleMove());
+
+        this.keys.space.on("down", () => this.handleJump());
+
     }
 
     handleMove() {
@@ -66,6 +70,11 @@ export default class Level1 extends Phaser.Scene {
         }
         else {
             this.player.halt();
+        }
+    }
+    handleJump() {
+        if (this.keys.space.isDown) {
+            this.player.jump();
         }
     }
 }

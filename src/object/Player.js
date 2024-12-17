@@ -45,5 +45,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             duration: 300,
         });
     }
-
+    jump() {
+        if (this.body.onFloor() && this.canJump) {
+            this.body.setVelocityY(-600);
+            this.canJump = false;
+        }
+    }
 }
