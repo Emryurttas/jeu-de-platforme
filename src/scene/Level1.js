@@ -12,10 +12,15 @@ export default class Level1 extends Phaser.Scene {
         StoneGroup.preload(this);
         LavaGroup.preload(this);
         Player.preload(this);
+        this.load.image("bg", "/img/bg.png");
     }
 
     create() {
         this.add.text(400, 50, "Niveau 1").setOrigin(0.5);
+
+        this.background = this.add.tileSprite(0, 0, 1472, 640, "bg");
+        this.background.setOrigin(0, 0);
+        this.background.setScrollFactor(0);
 
         this.stoneGroup = new StoneGroup(this);
         this.stoneGroup.addTiles(0, 8, 4);
@@ -50,6 +55,9 @@ export default class Level1 extends Phaser.Scene {
         });
         this.handleInput();
 
+        this.cameras.main.on("followupdate", () => {
+            this.background.setTilePosition(this.cameras.main.scrollX, this.cameras.main.scrollY);
+        });
 
     }
     handleInput() {
