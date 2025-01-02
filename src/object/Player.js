@@ -13,8 +13,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.setSize(40, 40);
         this.setCollideWorldBounds(true);
-        this.tween = null;
-
     }
     static preload(scene) {
         scene.load.spritesheet("player", "/img/player.png", { frameWidth: 40, frameHeight: 40 });
@@ -46,7 +44,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         });
     }
     jump() {
-        if (this.body.onFloor() && this.canJump) {
+        if (this.body.onFloor()) {
             this.body.setVelocityY(-600);
             this.canJump = false;
         }

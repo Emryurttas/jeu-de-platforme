@@ -29,7 +29,7 @@ export default class Level1 extends Phaser.Scene {
         this.stoneGroup.addTiles(11, 6, 1);
 
         this.lavaGroup = new LavaGroup(this);
-        this.lavaGroup.addTiles(4, 8, 4)
+        this.lavaGroup.addTiles(4, 8, 4);
 
         this.stoneGroup.children.iterate((tile) => {
             tile.refreshBody();
