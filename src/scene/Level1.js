@@ -40,12 +40,17 @@ export default class Level1 extends Phaser.Scene {
         this.player = new Player(this, 40, 280);
         this.physics.add.collider(this.player, this.stoneGroup);
 
+        this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
+        this.setBounds(0, 0, 1472, 640);
+
         this.keys = this.input.keyboard.addKeys({
             left: Phaser.Input.Keyboard.KeyCodes.LEFT,
             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
             space: Phaser.Input.Keyboard.KeyCodes.SPACE
         });
         this.handleInput();
+
+
     }
     handleInput() {
         this.keys.left.on("down", () => this.handleMove());
@@ -76,5 +81,9 @@ export default class Level1 extends Phaser.Scene {
         if (this.keys.space.isDown) {
             this.player.jump();
         }
+    }
+    setBounds(x, y, width, height) {
+        this.cameras.main.setBounds(x, y, width, height);
+        this.physics.world.setBounds(x, y, width, height);
     }
 }
