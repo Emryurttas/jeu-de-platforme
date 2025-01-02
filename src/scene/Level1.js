@@ -44,6 +44,9 @@ export default class Level1 extends Phaser.Scene {
         this.player = new Player(this, 40, 280);
         this.physics.add.collider(this.player, this.stoneGroup);
 
+        this.physics.add.overlap(this.player, this.lavaGroup, this.handleLavaCollision, null, this);
+
+
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.setBounds(0, 0, 1472, 640);
 
@@ -83,6 +86,10 @@ export default class Level1 extends Phaser.Scene {
         if (this.keys.space.isDown) {
             this.player.jump();
         }
+    }
+
+    handleLavaCollision(player, lava) {
+        player.death();
     }
     setBounds(x, y, width, height) {
         this.cameras.main.setBounds(x, y, width, height);

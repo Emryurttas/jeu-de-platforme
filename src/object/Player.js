@@ -34,6 +34,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     static preload(scene) {
         scene.load.spritesheet("player", "/img/player.png", { frameWidth: 40, frameHeight: 40 });
+        scene.load.image("particle", "/img/particle.png");
     }
     #move(velocity) {
         if (this.moveTween) {
@@ -71,5 +72,37 @@ export default class Player extends Phaser.GameObjects.Sprite {
             this.body.setVelocityY(-600);
             this.anims.play('stand', true);
         }
+    }
+
+    death() {
+        this.scene.input.enabled = false;
+        this.body.setEnable(false);
+
+        const playerCenterX = this.x + this.width / 2;
+        const playerCenterY = this.y + this.height / 2;
+
+        this.scene.add.particles(playerCenterX, playerCenterY, "particle", {
+            lifespan: { min: 300, max: 600 },
+            speed: { min: 100, max: 300 },
+            scale: { start: 0.8, end: 0.5 },
+            quantity: 30,
+            frequency: 20,
+            angle: { min: 0, max: 360 },
+            rotate: { min: -180, max: 180 },
+            gravityY: 100,
+            alpha: { start: 0.9, end: 0 },
+            color: [0xFF6347, 0xFF4500, 0xFFD700, 0xFFFFFF],
+            blendMode: Phaser.BlendModes.ADD,
+            emitting: true,
+        });
+
+        this.setVisible(false);
+        this.body.setCollideWorldBounds(false);
+        this.scene.physics.world.disable(this);
+
+        this.scene.time.delayedCall(2000, () => {
+            this.scene.input.enabled = true;
+            this.scene.scene.restart();
+        });
     }
 }
