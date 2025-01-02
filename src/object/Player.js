@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-export default class Player extends Phaser.Physics.Arcade.Sprite {
+export default class Player extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, "player");
         scene.add.existing(this);
@@ -12,7 +12,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.body.setGravityY(1000);
 
         this.setSize(40, 40);
-        this.setCollideWorldBounds(true);
+        this.body.setCollideWorldBounds(true);
 
         this.#createAnims();
     }
@@ -69,7 +69,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     jump() {
         if (this.body.onFloor()) {
             this.body.setVelocityY(-600);
-            this.canJump = false;
+            this.anims.play('stand', true);
         }
     }
 }
