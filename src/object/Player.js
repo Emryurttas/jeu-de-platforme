@@ -13,7 +13,25 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.setSize(40, 40);
         this.setCollideWorldBounds(true);
+
+        this.#createAnims();
     }
+
+    #createAnims() {
+        this.anims.create({
+            key: 'stand',
+            frames: [{ key: 'player', frame: 0 }],
+            frameRate: 20
+        });
+
+        this.anims.create({
+            key: 'right',
+            frames: this.anims.generateFrameNumbers('player', { start: 1, end: 2 }),
+            frameRate: 20,
+            repeat: -1
+        });
+    }
+
     static preload(scene) {
         scene.load.spritesheet("player", "/img/player.png", { frameWidth: 40, frameHeight: 40 });
     }
@@ -29,9 +47,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
     moveRight() {
         this.#move(300);
+        this.anims.play('right', true);
+        this.setFlipX(false);
     }
     moveLeft() {
         this.#move(-300);
+        this.anims.play('right', true);
+        this.setFlipX(true);
     }
     halt(){
         if (this.moveTween) {
@@ -42,6 +64,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             x: 0,
             duration: 300,
         });
+        this.anims.play('stand', true);
     }
     jump() {
         if (this.body.onFloor()) {
