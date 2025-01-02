@@ -88,7 +88,7 @@ export default class Level1 extends Phaser.Scene {
         }
     }
 
-    handleLavaCollision(player, lava) {
+    handleLavaCollision(player) {
         player.death();
     }
     setBounds(x, y, width, height) {
