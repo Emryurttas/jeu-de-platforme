@@ -27,7 +27,6 @@ export default class Background extends Phaser.Physics.Arcade.StaticGroup {
     static preload(scene) {
         urls.forEach((url) => {
             const imageName = url.split('/').pop().split('.')[0];
-            console.log(`Préchargement de l'image: ${imageName}`);
             scene.load.image(imageName, url);
         });
     }
