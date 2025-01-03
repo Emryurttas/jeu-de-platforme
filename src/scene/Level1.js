@@ -4,8 +4,9 @@ import StoneGroup from "../object/StoneGroup.js";
 import LavaGroup from "../object/LavaGroup.js";
 import Player from "../object/Player.js";
 import Background from "../object/Background.js";
+import Level from "./Level.js";
 
-export default class Level1 extends Phaser.Scene {
+export default class Level1 extends Level {
     constructor() {
         super({ key: "Level1" });
     }
@@ -46,7 +47,7 @@ export default class Level1 extends Phaser.Scene {
 
         this.player = new Player(this, 40, 280);
         this.physics.add.collider(this.player, this.stoneGroup);
-        this.physics.add.overlap(this.player, this.lavaGroup, this.handleLavaCollision, null, this);
+        this.physics.add.overlap(this.player, this.lavaGroup, () => {this.player.death();});
 
         this.elevator = new Elevator(this);
         this.elevator.back.setPosition(21 * 64, 7 * 64);
@@ -67,52 +68,5 @@ export default class Level1 extends Phaser.Scene {
         });
 
         this.handleInput();
-    }
-
-    handleInput() {
-        this.keys.left.on("down", () => this.handleMove());
-        this.keys.left.on("up", () => this.handleMove());
-
-        this.keys.right.on("down", () => this.handleMove());
-        this.keys.right.on("up", () => this.handleMove());
-
-        this.keys.space.on("down", () => this.handleJump());
-        this.keys.down.on("down", () => this.#handleInteract());
-    }
-
-    handleMove() {
-        if (this.keys.left.isDown && this.keys.right.isDown) {
-            this.player.halt();
-        }
-        else if (this.keys.left.isDown) {
-            this.player.moveLeft();
-        }
-        else if (this.keys.right.isDown) {
-            this.player.moveRight();
-        }
-        else {
-            this.player.halt();
-        }
-    }
-    handleJump() {
-        if (this.keys.space.isDown) {
-            this.player.jump();
-        }
-    }
-
-    handleLavaCollision(player) {
-        player.death();
-    }
-    setBounds(x, y, width, height) {
-        this.cameras.main.setBounds(x, y, width, height);
-        this.physics.world.setBounds(x, y, width, height);
-    }
-
-    #handleInteract() {
-        const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.elevator.back.x, this.elevator.back.y);
-
-        if (distance < 50 && this.player.body.onFloor()) {
-            this.elevator.moveIn(this.player);
-        }
     }
 }
