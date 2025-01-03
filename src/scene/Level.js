@@ -5,6 +5,16 @@ export default class Level extends Phaser.Scene {
     constructor(key) {
         super({ key: key });
         this.elevators = [];
+
+    }
+    create() {
+        this.layers = {
+            bg: this.add.layer(),
+            back: this.add.layer(),
+            player: this.add.layer(),
+            front: this.add.layer(),
+        };
+
     }
 
     preload() {
@@ -13,11 +23,20 @@ export default class Level extends Phaser.Scene {
 
     initScene(xPlayer, yPlayer, levelBound) {
         this.player = new Player(this, xPlayer, yPlayer);
-        this.physics.add.collider(this.player, this.stoneGroup);
+        this.layers.player.add(this.player);
+
+        this.keys = this.input.keyboard.addKeys({
+            left: Phaser.Input.Keyboard.KeyCodes.LEFT,
+            right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
+            space: Phaser.Input.Keyboard.KeyCodes.SPACE,
+            down: Phaser.Input.Keyboard.KeyCodes.DOWN,
+        });
+
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.setBounds(levelBound.x, levelBound.y, levelBound.width, levelBound.height);
 
         this.handleInput();
+
     }
 
 
@@ -54,11 +73,13 @@ export default class Level extends Phaser.Scene {
     }
 
     #handleInteract() {
-        const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.elevator.back.x, this.elevator.back.y);
+        this.elevators.forEach((elevator) => {
+            const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, elevator.back.x, elevator.back.y);
 
-        if (distance < 50 && this.player.body.onFloor()) {
-            this.elevator.moveIn(this.player);
-        }
+            if (distance < 50 && this.player.body.onFloor()) {
+                elevator.moveIn(this.player);
+            }
+        });
     }
 
     setBounds(x, y, width, height) {
