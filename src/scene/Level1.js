@@ -61,7 +61,8 @@ export default class Level1 extends Level {
         this.physics.add.collider(this.player, this.stoneGroup);
         this.physics.add.overlap(this.player, this.lavaGroup, () => {this.player.death();});
 
-        this.elevator = new Elevator(this);
+        this.elevator = new Elevator(this, "Level2");
+
         this.elevator.back.setPosition(21 * 64, 7 * 64);
         this.elevators.push(this.elevator);
 
@@ -72,7 +73,7 @@ export default class Level1 extends Level {
 
         this.layers.back.add(this.elevator.back);
         this.layers.front.add(this.elevator.front);
-        
+
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.setBounds(0, 0, 1472, 640);
 
