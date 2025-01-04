@@ -10,4 +10,4 @@ game.scene.add("Title", Title);
 game.scene.add("Level1", Level1);
 game.scene.add("Level2", Level2);
 
-game.scene.start("Level2");
+game.scene.start("Level1");
