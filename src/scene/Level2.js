@@ -28,7 +28,6 @@ export default class Level2 extends Level {
         this.stoneGroup = new StoneGroup(this);
         this.stoneGroup.addTiles(0, 8, 15);
 
-
         this.stoneGroup.children.entries.forEach(child => {
             this.layers.back.add(child);
         });
@@ -51,5 +50,12 @@ export default class Level2 extends Level {
 
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.setBounds(0, 0, 1472, 640);
+
+        const fromSceneKey = this.scene.settings.data.from;
+        console.log('Scene venant de :', fromSceneKey);
+
+        if (fromSceneKey === 'Level1') {
+            this.elevator.moveOut(this.player);
+        }
     }
 }
