@@ -3,6 +3,7 @@ import Player from "../object/Player.js";
 import Background from "../object/Background.js";
 import Elevator from "../object/Elevator.js";
 import Level from "./Level.js";
+import LadderGroup from "../object/LadderGroup.js";
 
 export default class Level2 extends Level {
     constructor() {
@@ -15,6 +16,7 @@ export default class Level2 extends Level {
         Player.preload(this);
         Background.preload(this);
         Elevator.preload(this);
+        LadderGroup.preload(this);
     }
 
     create() {
@@ -27,6 +29,8 @@ export default class Level2 extends Level {
 
         this.stoneGroup = new StoneGroup(this);
         this.stoneGroup.addTiles(0, 8, 15);
+        this.stoneGroup.addTiles(6, 3, 3);
+        this.stoneGroup.addTiles(12, 3, 2);
 
         this.stoneGroup.children.entries.forEach(child => {
             this.layers.back.add(child);
@@ -38,15 +42,30 @@ export default class Level2 extends Level {
 
         this.physics.add.collider(this.player, this.stoneGroup);
 
+        this.ladderGroup = new LadderGroup(this);
+        this.ladderGroup.addTiles(4, 3, 1, 4);
+        this.ladderGroup.addTiles(8, 3, 1, 2);
+        this.ladderGroup.children.entries.forEach(child => {
+            this.layers.back.add(child);
+        });
+
+        this.ladderGroup.children.iterate((tile) => {
+            tile.refreshBody();
+        });
+
         this.elevator = new Elevator(this, "Level1");
-        this.elevator.back.setPosition(100, 450);
-
+        this.elevator.back.setPosition(64, 7*64);
         this.elevators.push(this.elevator);
-
         this.layers.back.add(this.elevator.back);
         this.layers.front.add(this.elevator.front);
-
         this.physics.add.existing(this.elevator.back, true);
+
+        this.elevator2 = new Elevator(this, "Level3");
+        this.elevator2.back.setPosition(13*64, 2*64);
+        this.elevators.push(this.elevator2);
+        this.layers.back.add(this.elevator2.back);
+        this.layers.front.add(this.elevator2.front);
+        this.physics.add.existing(this.elevator2.back, true);
 
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.setBounds(0, 0, 1472, 640);
