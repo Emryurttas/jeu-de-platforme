@@ -70,6 +70,9 @@ export default class Level1 extends Level {
         this.elevator.back.body.setSize(this.elevator.back.width, this.elevator.back.height);
         this.physics.add.existing(this.elevator.back, true);
 
+        this.layers.back.add(this.elevator.back);
+        this.layers.front.add(this.elevator.front);
+        
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.setBounds(0, 0, 1472, 640);
 
