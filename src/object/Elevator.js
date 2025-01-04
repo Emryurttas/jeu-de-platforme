@@ -76,10 +76,39 @@ export default class Elevator extends Phaser.Physics.Arcade.StaticGroup {
 
                         this.front.on('animationcomplete', () => {
                             this.isElevatorOccupied = false;
-                            this.scene.scene.start(this.to);
+
+                            this.scene.data.set('to', this.to);
+                            this.scene.scene.start(this.to, { from: this.scene.scene.key });
                         });
                     }});
             }
         }
+    }
+
+    moveOut(player) {
+        this.scene.input.keyboard.enabled = false;
+        player.halt();
+
+        const elevatorCenterX = this.back.x + this.back.width / 5;
+        const elevatorCenterY = this.back.y + this.back.height / 3;
+        player.setPosition(elevatorCenterX, elevatorCenterY);
+
+        this.back.setTexture("elevator", 3);
+        this.front.setTexture("elevator", 4);
+
+        this.front.anims.play("open");
+
+        this.front.once('animationcomplete', () => {
+            this.scene.input.keyboard.enabled = true;
+
+            this.scene.time.delayedCall(1000, () => {
+                this.back.anims.play("close");
+
+                this.back.once('animationcomplete', () => {
+                    this.back.setTexture("elevator", 0);
+                    this.front.setTexture("elevator", 0);
+                });
+            });
+        });
     }
 }
