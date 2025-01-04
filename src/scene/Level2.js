@@ -2,8 +2,8 @@ import StoneGroup from "../object/StoneGroup.js";
 import Player from "../object/Player.js";
 import Background from "../object/Background.js";
 import Elevator from "../object/Elevator.js";
-import Level from "./Level.js";
 import LadderGroup from "../object/LadderGroup.js";
+import Level from "./Level.js";
 
 export default class Level2 extends Level {
     constructor() {
@@ -60,7 +60,7 @@ export default class Level2 extends Level {
         this.layers.front.add(this.elevator.front);
         this.physics.add.existing(this.elevator.back, true);
 
-        this.elevator2 = new Elevator(this, "Level3");
+        this.elevator2 = new Elevator(this, "GameOver");
         this.elevator2.back.setPosition(13*64, 2*64);
         this.elevators.push(this.elevator2);
         this.layers.back.add(this.elevator2.back);
