@@ -1,11 +1,12 @@
 import Phaser from "phaser";
 
 export default class Elevator extends Phaser.Physics.Arcade.StaticGroup {
-    constructor(scene) {
+    constructor(scene, to, x = 21 * 64, y = 7 * 64) {
         super(scene.physics.world, scene);
         this.scene = scene;
-        this.back = this.create(21 * 64, 7 * 64, "elevator").setOrigin(0, 0);
-        this.front = this.create(21 * 64, 7 * 64, "elevator").setOrigin(0, 0);
+        this.to = to
+        this.back = this.create(x, y, "elevator").setOrigin(0, 0);
+        this.front = this.create(x, y, "elevator").setOrigin(0, 0);
         this.#createAnims();
         this.isElevatorOccupied = false;
     }
@@ -75,7 +76,7 @@ export default class Elevator extends Phaser.Physics.Arcade.StaticGroup {
 
                         this.front.on('animationcomplete', () => {
                             this.isElevatorOccupied = false;
-                            this.scene.scene.restart();
+                            this.scene.scene.start(this.to);
                         });
                     }});
             }
