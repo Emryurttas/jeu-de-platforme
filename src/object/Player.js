@@ -6,13 +6,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
         scene.add.existing(this);
         scene.physics.world.enable(this);
 
-
         this.setOrigin(0, 0);
-
         this.body.setGravityY(1000);
-
         this.setSize(40, 40);
         this.body.setCollideWorldBounds(true);
+
+        this.isClimbing = false;
 
         this.#createAnims();
     }
@@ -103,6 +102,18 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.scene.time.delayedCall(2000, () => {
             this.scene.input.enabled = true;
             this.scene.scene.restart();
+        });
+    }
+
+    climbUp(ladders) {
+        this.ladderGroup = ladders;
+        this.body.setAllowGravity(false);
+        this.body.setVelocityY(0);
+        this.isClimbing = true;
+        this.scene.tweens.add({
+            targets: this.body.velocity,
+            y: -200,
+            duration: 300,
         });
     }
 }
