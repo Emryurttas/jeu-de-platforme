@@ -111,5 +111,24 @@ export default class Level extends Phaser.Scene {
             });
         }
     }
-
+    handleClimbDown() {
+        if (this.ladderGroup && this.ladderGroup.children) {
+            this.ladderGroup.children.entries.forEach(ladder => {
+                if (this.physics.world.overlap(this.player, ladder)) {
+                    if (this.keys.up.isDown && this.keys.down.isDown) {
+                        this.player.climbStop();
+                    }
+                    else if (this.keys.down.isDown && !this.keys.up.isDown) {
+                        this.player.climbDown(ladder);
+                    }
+                    else if (!this.keys.down.isDown && this.keys.up.isDown) {
+                        this.player.climbUp(ladder);
+                    }
+                    else if (this.keys.up.isUp && this.keys.down.isUp) {
+                        this.player.climbStop();
+                    }
+                }
+            });
+        }
+    }
 }
