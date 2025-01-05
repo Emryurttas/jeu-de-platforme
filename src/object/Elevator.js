@@ -6,11 +6,10 @@ export default class Elevator extends Phaser.Physics.Arcade.StaticGroup {
         this.scene = scene;
         this.to = to
         this.back = this.create(x, y, "elevator").setOrigin(0, 0);
-        this.front = this.create(x, y, "elevator").setOrigin(0, 0);
+        this.front = this.create(x, y, "elevator", 0, false).setOrigin(0, 0);
         this.#createAnims();
         this.isElevatorOccupied = false;
     }
-
     static preload(scene) {
         scene.load.spritesheet("elevator", "img/elevator.png", {
             frameWidth: 64,
