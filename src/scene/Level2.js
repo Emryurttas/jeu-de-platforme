@@ -54,18 +54,41 @@ export default class Level2 extends Level {
         });
 
         this.elevator = new Elevator(this, "Level1");
-        this.elevator.back.setPosition(64, 7*64);
+
+        this.elevator.back.setPosition(64, 7 * 64);
+        this.elevator.front.setPosition(64, 7 * 64);
+
         this.elevators.push(this.elevator);
         this.layers.back.add(this.elevator.back);
         this.layers.front.add(this.elevator.front);
+
+        this.elevator.back.body.setSize(this.elevator.back.width, this.elevator.back.height);
         this.physics.add.existing(this.elevator.back, true);
+        this.elevator.back.refreshBody();
+
+        this.elevator.front.body.setSize(this.elevator.front.width, this.elevator.front.height);
+        this.physics.add.existing(this.elevator.front, true);
+        this.elevator.front.refreshBody();
 
         this.elevator2 = new Elevator(this, "GameOver");
-        this.elevator2.back.setPosition(13*64, 2*64);
+
+        this.elevator2.back.setPosition(13 * 64, 2 * 64);
+        this.elevator2.front.setPosition(13 * 64, 2 * 64);
+
         this.elevators.push(this.elevator2);
         this.layers.back.add(this.elevator2.back);
         this.layers.front.add(this.elevator2.front);
+
+        this.elevator2.back.body.setSize(this.elevator2.back.width, this.elevator2.back.height);
         this.physics.add.existing(this.elevator2.back, true);
+        this.elevator2.back.refreshBody();
+
+        this.elevator2.front.body.setSize(this.elevator2.front.width, this.elevator2.front.height);
+        this.physics.add.existing(this.elevator2.front, true);
+        this.elevator2.front.refreshBody();
+
+
+
 
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.setBounds(0, 0, 1472, 640);

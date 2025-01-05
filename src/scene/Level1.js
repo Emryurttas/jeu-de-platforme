@@ -64,15 +64,19 @@ export default class Level1 extends Level {
         this.elevator = new Elevator(this, "Level2");
 
         this.elevator.back.setPosition(21 * 64, 7 * 64);
+        this.elevator.front.setPosition(21 * 64, 7 * 64);
+
         this.elevators.push(this.elevator);
 
         this.layers.back.add(this.elevator.back);
+        this.layers.front.add(this.elevator.front);
 
         this.elevator.back.body.setSize(this.elevator.back.width, this.elevator.back.height);
         this.physics.add.existing(this.elevator.back, true);
 
-        this.layers.back.add(this.elevator.back);
-        this.layers.front.add(this.elevator.front);
+        this.elevator.back.refreshBody();
+        this.elevator.front.refreshBody && this.elevator.front.refreshBody();
+
 
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.setBounds(0, 0, 1472, 640);
