@@ -141,4 +141,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
             this.ladderGroup = null;
         }
     }
+    preUpdate(time, delta) {
+        super.preUpdate(time, delta);
+
+        if (this.ladderGroup && !this.scene.physics.world.overlap(this, this.ladderGroup)) {
+            this.climbStop();
+        }
+    }
+
 }
