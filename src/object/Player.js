@@ -116,4 +116,16 @@ export default class Player extends Phaser.GameObjects.Sprite {
             duration: 300,
         });
     }
+
+    climbDown(ladders) {
+        this.ladderGroup = ladders;
+        this.body.setAllowGravity(false);
+        this.body.setVelocityY(0);
+        this.isClimbing = true;
+        this.scene.tweens.add({
+            targets: this.body.velocity,
+            y: 200,
+            duration: 300,
+        });
+    }
 }
