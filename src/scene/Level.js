@@ -30,6 +30,7 @@ export default class Level extends Phaser.Scene {
             right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
             space: Phaser.Input.Keyboard.KeyCodes.SPACE,
             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
+            up: Phaser.Input.Keyboard.KeyCodes.UP,
         });
 
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
@@ -49,6 +50,9 @@ export default class Level extends Phaser.Scene {
 
         this.keys.space.on("down", () => this.handleJump());
         this.keys.down.on("down", () => this.#handleInteract());
+
+        this.keys.up.on("down", () => this.handleClimbUp());
+        this.keys.down.on("down", () => this.handleClimbDown());
     }
 
     handleMove() {
@@ -86,4 +90,26 @@ export default class Level extends Phaser.Scene {
         this.cameras.main.setBounds(x, y, width, height);
         this.physics.world.setBounds(x, y, width, height);
     }
+
+    handleClimbUp() {
+        if (this.ladderGroup && this.ladderGroup.children) {
+            this.ladderGroup.children.entries.forEach(ladder => {
+                if (this.physics.world.overlap(this.player, ladder)) {
+                    if (this.keys.up.isDown && this.keys.down.isDown) {
+                        this.player.climbStop();
+                    }
+                    else if (this.keys.up.isDown && !this.keys.down.isDown) {
+                        this.player.climbUp(ladder);
+                    }
+                    else if (!this.keys.up.isDown && this.keys.down.isDown) {
+                        this.player.climbDown(ladder);
+                    }
+                    else if (this.keys.up.isUp && this.keys.down.isUp) {
+                        this.player.climbStop();
+                    }
+                }
+            });
+        }
+    }
+
 }
