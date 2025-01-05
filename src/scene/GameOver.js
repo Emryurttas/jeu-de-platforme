@@ -42,9 +42,7 @@ export default class GameOver extends Phaser.Scene {
         });
 
         this.input.once('pointerdown', () => {
-            this.cameras.main.fadeOut(500, 0, 0, 0, false, () => {
-                this.scene.start('Level1');
-            });
+            this.scene.start('Level1');
         });
     }
 }
