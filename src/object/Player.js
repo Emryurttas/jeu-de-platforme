@@ -128,4 +128,17 @@ export default class Player extends Phaser.GameObjects.Sprite {
             duration: 300,
         });
     }
+    climbStop() {
+        if (this.ladderGroup) {
+            this.scene.tweens.add({
+                targets: this.body.velocity,
+                y: 0,
+                duration: 50,
+
+            });
+            this.body.setAllowGravity(true);
+            this.isClimbing = false;
+            this.ladderGroup = null;
+        }
+    }
 }
