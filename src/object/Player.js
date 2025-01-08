@@ -99,7 +99,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.body.setCollideWorldBounds(false);
         this.scene.physics.world.disable(this);
 
-        this.scene.time.delayedCall(2000, () => {
+        this.scene.time.delayedCall(500, () => {
             this.scene.input.enabled = true;
             this.scene.scene.restart();
         });

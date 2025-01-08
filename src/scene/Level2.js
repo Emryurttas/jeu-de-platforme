@@ -28,7 +28,7 @@ export default class Level2 extends Level {
         this.layers.bg.add(this.background.tileSprites);
 
         this.stoneGroup = new StoneGroup(this);
-        this.stoneGroup.addTiles(0, 8, 15);
+        this.stoneGroup.addTiles(0, 8, 25);
         this.stoneGroup.addTiles(6, 3, 3);
         this.stoneGroup.addTiles(12, 3, 2);
 
