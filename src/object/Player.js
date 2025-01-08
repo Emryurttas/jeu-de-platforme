@@ -69,7 +69,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
     jump() {
         if (this.body.onFloor()) {
             this.body.setVelocityY(-600);
-            this.anims.play('stand', true);
         }
     }
 
